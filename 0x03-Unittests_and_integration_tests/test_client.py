@@ -6,6 +6,7 @@ from client import GithubOrgClient
 import unittest
 from unittest.mock import patch
 from parameterized import parameterized
+from typing import Dict
 
 
 class TestGithubOrgClient(unittest.TestCase):
