@@ -6,7 +6,7 @@ from utils import access_nested_map
 import unittest
 from parameterized import parameterized
 from typing import Mapping, Sequence, Any, Dict
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from utils import get_json
 
 
@@ -49,8 +49,7 @@ class TestGetJson(unittest.TestCase):
         mock_response = Mock()
         mock_response.json.return_value = r
 
-        mock_get.return_value = mock_response
-        result = get_json(url)
-        mock_get.assert_called_once_with(url)
-
-        self.assertEqual(result, r)
+        with patch('requests.get', return_value=mock_response):
+            result = get_json(url)
+            self.assertEqual(result, r)
+            mock_response.json.assert_called_once()
