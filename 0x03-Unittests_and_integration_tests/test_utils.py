@@ -19,3 +19,17 @@ class TestAccessNestedMap(unittest.TestCase):
         """ test case for access_nested_map"""
         result = access_nested_map(n, p)
         self.assertEqual(result, r)
+
+    @parameterized.expand([
+        ({}, ("a",), KeyError),
+        ({"a": 1}, ("a", "b"), KeyError),
+        ])
+    def test_access_nested_map_exception(
+            self,
+            n: Mapping,
+            p: Sequence,
+            r: Any
+            ) -> None:
+        """ test case for key error raised """
+        with self.assertRaises(r):
+            access_nested_map(n, p)
